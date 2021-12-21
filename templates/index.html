@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DO IT--计算机学习搜索引擎</title>
+    <link rel="icon" type="image/svg+xml" href="https://gitee.com/zeng-fanhao/figure-bed/raw/master/images/202112191714296.png">
+    <style>
+     * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+     html, body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #E0E3E9;
+    }
+
+     .chat-box {
+         position: relative;
+        width: 80%;
+        height: 86%;
+        background-color: #FCFDFD;
+        border-radius: 16px;
+        padding: 20px;
+         box-shadow: 0 0 5px #00000070;
+    }
+
+
+    .select-area {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        margin: -20px -20px;
+        padding: 0 20px;
+        border-bottom: 1px solid rgba(197, 203, 197, 0.44);
+    }
+    .select-area .select-title {
+        font-size: 20px;
+    }
+    .select-area .select > select{
+        width: 100px;
+        padding: 6px 4px;
+        font-size: 17px;
+        margin: 0 6px;
+        text-transform: uppercase;
+        background-color: #F0ECFB;
+        color: #7062F1;
+        border-radius: 4px;
+    }
+
+    .result-area {
+        height: 78%;
+        overflow: scroll;
+        display: flex;
+        flex-direction: column-reverse;
+        margin: 30px 0;
+    }
+    .result-area::-webkit-scrollbar {
+          display: none;
+    }
+
+    .query-area {
+        height: 9%;
+        background-color: #FFFFFF;
+    }
+    .query-box {
+        width: 100%;
+        height: 100%;
+        background-color: #F0ECFB;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px 0 26px;
+    }
+    .query-box > * {
+        display: block;
+    }
+    .query-input {
+        height: 70%;
+        /*line-height: 39px;*/
+        font-size: 18px;
+        width: calc(100% - 100px);
+        background-color: transparent;
+        border: none;
+        outline: 0;
+    }
+    .query-btn {
+        user-select: none;
+        width: 100px;
+        height: 70%;
+        background-color: #7062F1;
+        border-radius: 40px;
+        color: #ffffff;
+        display: flex;
+        padding: 0 20px;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 17px;
+        cursor: pointer;
+    }
+    .query-btn:active {
+        box-shadow: inset 1px 1px 30px #575656;
+    }
+    .query-input::placeholder {
+        color: #a492f6;
+    }
+
+    .keyword-box {
+        display: flex;
+        justify-content: end;
+        align-items: start;
+    }
+    .keyword-box .keyword {
+        max-width: 80%;
+        background-color: #7062F1;
+        border-radius: 30px 30px 0 30px;
+        padding: 16px 20px;
+        margin: 0 0 14px 0;
+        font-size: 14px;
+        color: #FFFFFF;
+    }
+    .keyword-icon {
+        width: 32px;
+        height: 32px;
+        margin: 10px 5px;
+        background-image: url("https://gitee.com/zeng-fanhao/figure-bed/raw/master/images/202112181710239.png");
+    }
+    .result-box {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+    }
+    .result-box .result {
+        max-width: 80%;
+        background-color: #F6F5F7;
+        border-radius: 0px 30px 30px 30px;
+        padding: 16px 20px;
+        margin: 0 0 14px 0;
+        font-size: 14px;
+    }
+    .result-box .result > a {
+        display: block;
+        padding: 10px 0;
+        border-bottom: 1px solid #c3d1d1;
+        color: #4c3e72;
+        text-decoration: #a492f6;
+    }
+    .result-box .result > a:hover {
+        opacity: 0.6;
+    }
+    .result-icon {
+        width: 32px;
+        height: 32px;
+        margin: 10px 5px;
+        background-image: url("https://gitee.com/zeng-fanhao/figure-bed/raw/master/images/202112181609351.png");
+     }
+
+    .disabled {
+        pointer-events: none;
+        box-shadow: inset 0 0 16px #525297;
+        opacity: 0.6;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="chat-box">
+        <!--        算法选择区域          -->
+        <div class="select-area">
+            <div class="select-title">
+                请选择搜索算法
+            </div>
+            <div class="select">
+                <select name="participle" id="participle-select">
+                    <option value="0">统计分词</option>
+                    <option value="1">机器学习</option>
+                </select>
+                <select name="sort" id="sort-select">
+                    <option value="0">tf-idf</option>
+                    <option value="1">jaccard</option>
+                </select>
+            </div>
+        </div>
+
+        <!--        搜索结果区域          -->
+        <div class="result-area">
+
+        </div>
+
+        <!--        问题搜索区域          -->
+        <div class="query-area">
+            <div class="query-box">
+                <input type="text" class="query-input" placeholder="输入关键词搜索文章">
+                <div class="query-btn">
+                    <span>搜索</span>
+                    <span>
+                        <svg t="1639749095908" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7780" width="22" height="22"><path d="M713.2405 353.93916L277.986702 549.976229l182.384676 27.869225 93.767596 307.9373 101.458091-301.481517z" fill="#ffffff" p-id="7781"></path><path d="M500.129121 929.032969c-4.762463-4.762463-7.937438-11.041858-8.784097-18.026802l-37.958591-318.732215-317.003617-36.335825c-13.54656-1.55221-24.517863-12.029628-26.705068-25.470356-2.187205-13.440728 4.868295-26.881455 17.21542-32.666965l719.661006-337.782065c11.641575-5.468013 25.54091-3.033865 34.642505 6.06773 9.101595 9.101595 11.535743 23.00093 6.06773 34.642505l-337.782065 719.661006c-5.78551 12.311848-19.19096 19.367348-32.59641 17.21542-6.526338-1.023048-12.311848-4.127468-16.756813-8.572433z m1.234713-384.912805c4.727185 4.727185 7.866883 10.971303 8.713542 17.991525l28.610053 240.169222L798.541496 248.706377l-552.798429 259.466014 237.452854 27.23423c7.090778 0.811383 13.40545 3.986358 18.167913 8.713543z m-24.976471 50.7996h-0.035277c0-0.035278 0.035278 0 0.035277 0zM871.953974 214.240259l-0.070555 0.035278c0.035278-0.035278 0.070555-0.035278 0.070555-0.035278z" fill="#ffffff" p-id="7782"></path></svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script>
+     const queryBtn = document.querySelectorAll(".query-btn")[0];
+     const queryInput = document.querySelectorAll(".query-input")[0];
+     const participleSelect = document.querySelector("#participle-select");
+     const sortSelect = document.querySelector("#sort-select");
+     const resultArea = document.querySelectorAll(".result-area")[0];
+
+
+
+     // 发起搜索
+     const search = function (keyword,participle,sort) { // 调用后端搜索借口
+         queryBtn.classList.add("disabled"); // 禁用搜索按钮
+         keyword =  keyword.replace(/\s/g, "-") // 将用户输入的空格替换为其他符号
+
+         const xhr = new XMLHttpRequest();
+
+         xhr.open("get", `/query?keyword=${keyword}&participle=${participle}&sort=${sort}`);
+         xhr.responseType = 'json'; // 返回的response类型设置为json
+         xhr.onreadystatechange = function () {
+             console.log(xhr.readyState)
+             if(xhr.readyState === 4) {
+                 if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                     let data = Array.isArray(xhr.response) ? xhr.response : [];
+                     queryBtn.classList.remove("disabled")
+                     renderResult(data);
+                 }
+             } else {
+                  queryBtn.classList.remove("disabled")
+             }
+         }
+
+         xhr.send(null);
+     }
+
+     // 渲染结果
+     const renderResult = function (data) {
+         console.log(data)
+         const resultBoxDom =  document.createElement("li");
+         resultBoxDom.className = 'result-box';
+         const resultDom =  document.createElement("div");
+         resultDom.className = "result";
+         const resultIcon =  document.createElement("div");
+         resultIcon.className = "result-icon";
+
+         data.forEach(item => {
+             const a = document.createElement("a");
+             a.innerText = item[0];
+             a.href = item[1];
+             a.target = "_blank";
+
+             resultDom.appendChild(a);
+         })
+
+         if(data.length === 0) {resultDom.innerText = "无结果"};
+         resultBoxDom.append(resultIcon, resultDom);
+
+         const firstLi = resultArea.getElementsByTagName("li")[0];
+         resultArea.insertBefore(resultBoxDom, firstLi);
+         resultArea.scrollTop = resultArea.scrollHeight;
+     }
+
+     queryBtn.addEventListener("click", () => {
+         const keyword = queryInput.value; // 关键词
+         const participle = parseInt(participleSelect.value); // 分词算法
+         const sort = parseInt(sortSelect.value); // 排序算法
+
+
+         if(keyword.trim() === "") return; // 如果关键词为空，则无需搜索
+
+         const keywordBoxDom = document.createElement("li"); // new一个搜索问题节点
+         keywordBoxDom.className = "keyword-box";
+         keywordBoxDom.innerHTML = `
+              <div class="keyword">
+                    ${keyword}
+                </div>
+                <div class="keyword-icon"></div>
+         `
+
+         const lis = resultArea.getElementsByTagName("li");
+
+         // 添加问题节点到搜索区域
+         if(lis.length > 0) {
+             resultArea.insertBefore(keywordBoxDom, lis[0]);
+         } else {
+             resultArea.appendChild(keywordBoxDom);
+         }
+
+          resultArea.scrollTop = resultArea.scrollHeight;
+         search(keyword, participle, sort); // 发起搜索请求
+         queryInput.value = "" // 清空输入框
+     })
+</script>
+</html>
