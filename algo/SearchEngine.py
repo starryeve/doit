@@ -5,10 +5,11 @@ import math
 import pymysql
 import jieba.analyse
 # 定义数据库变量
-host="localhost"
+host="39.108.154.184"
 user="root"
-password="root"
+password="naive_search_db"
 database="npl"
+port=3310
 class SearchEngine(SearchEngineBase):
     def __init__(self):#初始化
         super(SearchEngine, self).__init__()
@@ -18,7 +19,7 @@ class SearchEngine(SearchEngineBase):
     def process_files(self, participle):#相当于对数据库的所有
         # 为每一个单词建立倒序索引（词 -> 文档id）
         try:
-            db = pymysql.connect(host=host, user=user, password=password, database=database, charset="utf8")
+            db = pymysql.connect(host=host, user=user,port=port, password=password, database=database, charset="utf8")
 
             print("数据库连接成功")
         except pymysql.Error as e:
@@ -202,7 +203,7 @@ class SearchEngine(SearchEngineBase):
     def init_title_with_url(self, final):
         finallist = []
         try:
-            db = pymysql.connect(host=host, user=user, password=password, database=database, charset="utf8")
+            db = pymysql.connect(host=host, user=user, port=port,password=password, database=database, charset="utf8")
             print("数据库连接成功")
         except pymysql.Error as e:
             print("数据库连接失败：" + str(e))
