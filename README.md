@@ -1,17 +1,21 @@
 # DOIT —— 计算机学习搜索引擎
+
 ## 项目简介
+
 本项目是由三名同学分工完成的NLP期末大作业——一个简单的文章搜索引擎，使用了本学期课上所学习的基本算法理论。
 通过收集CSDN网站上的技术文档、博客的数据，调用python提供的jieba、pkuseg分词包，
 进行文章分词，构建倒排索引数据库。使用了tf-idf和jaccard算法，对搜索结果进行了一定的排序优化。
 
 ## 技术栈
+
 - 算法：jieba，pkuseg，tf-idf，jaccard
 - 爬虫：requests
 - 前端：html，css，javascript
 - 后端：flask，flask-restful，mysql
 
 ## 项目目录
-``` 
+
+``` markdown
 .
 ├── README.md
 ├── algo // 核心搜索算法
@@ -48,3 +52,6 @@
    ![image-20211218184827950](https://gitee.com/zeng-fanhao/figure-bed/raw/master/images/202112181848993.png)
 6. 使用chrome或其他浏览器打开http://localhost:5000
    ![image-20211218184504207](https://gitee.com/zeng-fanhao/figure-bed/raw/master/images/202112181845263.png)
+
+
+

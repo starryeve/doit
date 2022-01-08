@@ -5,11 +5,16 @@ import math
 import pymysql
 import jieba.analyse
 # 定义数据库变量
-host="39.108.154.184"
+host="127.0.0.1"
 user="root"
-password="naive_search_db"
+password="root"
 database="npl"
-port=3310
+port=3306
+# host="39.108.154.184"
+# user="root"
+# password="naive_search_db"
+# database="npl"
+# port=3310
 class SearchEngine(SearchEngineBase):
     def __init__(self):#初始化
         super(SearchEngine, self).__init__()
